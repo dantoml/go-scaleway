@@ -355,7 +355,8 @@ func (s *ScalewayAPI) fetchServers(api string, query url.Values, out chan<- type
 	}
 }
 
-// GetServers gets the list of servers from the ScalewayAPI
+// GetServers gets the list of servers from the ScalewayAPI. The `limit` argument
+// is currently unsupported and usage will return an error.
 func (s *ScalewayAPI) GetServers(all bool, limit int) (*[]types.ScalewayServer, error) {
 	query := url.Values{}
 	if !all {
@@ -364,7 +365,7 @@ func (s *ScalewayAPI) GetServers(all bool, limit int) (*[]types.ScalewayServer, 
 	if limit > 0 {
 		// FIXME: wait for the API to be ready
 		// query.Set("per_page", strconv.Itoa(limit))
-		panic("Not implemented yet")
+		return nil, fmt.Errorf("Limit is unimplemented")
 	}
 	if all && limit == 0 {
 		s.Cache.ClearServers()
